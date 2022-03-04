@@ -144,15 +144,15 @@ $('#success_message').html('');
 
 
 
-$(".CHFS_Plugin_activate" ).click(function() {
+$(".trptx_CHFS_Plugin_activate" ).click(function() {
 
 
-let activation_key=$("#CHFS_VALIDATE_API_PLUGIN_KEY").val();
+let activation_key=$("#TRPTX_TO_PLUGIN_AUTH_KEY").val();
 	$.ajax({
 url:ajaxurl,
 method:"POST",
 datatype:'json',
-data:{action: 'frontend_action_chfs_activation_plugin',activation_key:activation_key},
+data:{action: 'frontend_action_trptx_activation_plugin',activation_key:activation_key},
 beforeSend:function()
 {
 
