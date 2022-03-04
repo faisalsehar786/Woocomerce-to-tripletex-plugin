@@ -4,7 +4,7 @@
 * Plugin Uri:
 * Author: Faisal Abbas Khan
 * Author Uri:
-* Version: 9.0.0
+* Version: 1.0.0
 * Description: This Plugin is  integration of  Power Office And Woocomerce Api
 *
 * Tags:
@@ -12,31 +12,31 @@
 *
 *
 */
-// wp-admin/admin.php?page=power_office_woocomerce
+// wp-admin/admin.php?page=trptx_to_woocomerce
 defined('ABSPATH') || die("You Can't Access this File Directly");
-define('POWER_OFFICE_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('POWER_OFFICE_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('POWER_OFFICE_PLUGIN_FILE', __FILE__);
-define('POWER_OFFICE_PLUGIN_SITE_URL',get_site_url());
-define('POWER_OFFICE_PLUGIN_PO_API_URL',get_option('POWER_OFFICE_PLUGIN_PO_API_URL'));
-define('POWER_OFFICE_PLUGIN_WOO_AUTH_KEY',get_option('pwspk_woo_api_key'));
-define('POWER_OFFICE_PLUGIN_AUTH_KEY',get_option('pwspk_power_office_key'));
-define('CHFS_VALIDATE_API_URL','http://abc4741.sg-host.com');
-define('CHFS_VALIDATE_API_PLUGIN_ID',1);
+define('TRPTX_TO_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('TRPTX_TO_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('TRPTX_TO_PLUGIN_FILE', __FILE__);
+define('TRPTX_TO_PLUGIN_SITE_URL',get_site_url());
+define('TRPTX_TO_PLUGIN_PO_API_URL',get_option('TRPTX_TO_PLUGIN_PO_API_URL'));
+define('TRPTX_TO_PLUGIN_WOO_AUTH_KEY',get_option('pwspk_woo_api_key'));
+define('TRPTX_TO_PLUGIN_AUTH_KEY',get_option('pwspk_power_office_key'));
+define('TRPTX_CHFS_VALIDATE_API_URL','http://abc4741.sg-host.com');
+define('TRPTX_CHFS_VALIDATE_API_PLUGIN_ID',1);
 if ( is_admin() ) {
 add_action('admin_enqueue_scripts', 'admin_enqueue_scripts');
 add_action('admin_menu', 'plugin_menu_pwfo');
 add_action('admin_menu', 'process_form_settings_pwfo');
 }
 function admin_enqueue_scripts(){
-		wp_enqueue_script('pwspk_dev_script', POWER_OFFICE_PLUGIN_URL."assets/js/custom.js", array(), '1.0.0', false);
+		wp_enqueue_script('pwspk_dev_script', TRPTX_TO_PLUGIN_URL."assets/js/custom.js", array(), '1.0.0', false);
 	}
 function plugin_menu_pwfo(){
-	add_menu_page( 'Power Office woocomerce', 'Power Office woocomerce', 'manage_options', 'power_office_woocomerce','options_func_pwfo', $icon_url = '', $position = null);
-	add_submenu_page( 'power_office_woocomerce', 'License and Activation', 'License and Activation', 'manage_options','CHFS_ACTIVATION','CHFS_ACTIVATION_FUNCATION');
+	add_menu_page( 'Power Office woocomerce', 'Power Office woocomerce', 'manage_options', 'trptx_to_woocomerce','options_func_pwfo', $icon_url = '', $position = null);
+	add_submenu_page( 'trptx_to_woocomerce', 'License and Activation', 'License and Activation', 'manage_options','CHFS_ACTIVATION','CHFS_ACTIVATION_FUNCATION');
 }
 function CHFS_ACTIVATION_FUNCATION(){
-	$postsDataplug = wp_remote_retrieve_body(wp_remote_get(CHFS_VALIDATE_API_URL.'/api/getSiteData?id='.CHFS_VALIDATE_API_PLUGIN_ID.'&domain='.$_SERVER['HTTP_HOST']));
+	$postsDataplug = wp_remote_retrieve_body(wp_remote_get(TRPTX_CHFS_VALIDATE_API_URL.'/api/getSiteData?id='.TRPTX_TRPTX_CHFS_VALIDATE_API_PLUGIN_ID.'&domain='.$_SERVER['HTTP_HOST']));
 	$postsgetPlug = json_decode($postsDataplug);
 	
 	
@@ -66,7 +66,7 @@ function process_form_settings_pwfo(){
 		
 		update_option('pwspk_woo_api_key', sanitize_text_field($_POST['pwspk_woo_api_key']));
 		update_option('pwspk_power_office_key', sanitize_text_field($_POST['pwspk_power_office_key']));
-update_option('POWER_OFFICE_PLUGIN_PO_API_URL', sanitize_text_field($_POST['POWER_OFFICE_PLUGIN_PO_API_URL']));
+update_option('TRPTX_TO_PLUGIN_PO_API_URL', sanitize_text_field($_POST['TRPTX_TO_PLUGIN_PO_API_URL']));
 update_option('Modedev', sanitize_text_field($_POST['Modedev']));
 	
 	
@@ -100,7 +100,7 @@ function options_func_pwfo(){ ?>
 		<label for="">
 			
 			Power Office  Api Url
-			<input type="text" name="POWER_OFFICE_PLUGIN_PO_API_URL" value="<?php echo esc_html(get_option('POWER_OFFICE_PLUGIN_PO_API_URL')); ?>"  style="width:100%;"required/>
+			<input type="text" name="TRPTX_TO_PLUGIN_PO_API_URL" value="<?php echo esc_html(get_option('TRPTX_TO_PLUGIN_PO_API_URL')); ?>"  style="width:100%;"required/>
 		</label>
 		<br>
 		<br>
@@ -123,7 +123,7 @@ function options_func_pwfo(){ ?>
 		
 	</form>
 	<style type="text/css">
-	#adminmenu .toplevel_page_power_office_woocomerce{
+	#adminmenu .toplevel_page_trptx_to_woocomerce{
 	display: <?php if (get_option('Modedev')=='off') { echo "none"; } ?>;
 	}
 	#submit{
@@ -187,7 +187,7 @@ $urlAuth =$url;
 	curl_setopt($curlAuth, CURLOPT_POST, true);
 	curl_setopt($curlAuth, CURLOPT_RETURNTRANSFER, true);
 	$headersAuth = array(
-		"Authorization:".POWER_OFFICE_PLUGIN_AUTH_KEY,
+		"Authorization:".TRPTX_TO_PLUGIN_AUTH_KEY,
 		"Content-Type: text/plain",
 	);
 	curl_setopt($curlAuth, CURLOPT_HTTPHEADER, $headersAuth);
@@ -214,16 +214,16 @@ $urlAuth =$url;
 	
 }
 }
-$tokenAccess=power_office_authorization(POWER_OFFICE_PLUGIN_PO_API_URL.'/OAuth/Token');
+$tokenAccess=power_office_authorization(TRPTX_TO_PLUGIN_PO_API_URL.'/OAuth/Token');
 define('POWER_OFFICE_ACCESS_TOKEN',$tokenAccess);
 function CheckWoocomerceApiConect(){
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, POWER_OFFICE_PLUGIN_SITE_URL.'//wp-json/wc/v3/');
+curl_setopt($ch, CURLOPT_URL, TRPTX_TO_PLUGIN_SITE_URL.'//wp-json/wc/v3/');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
 $headers = array();
-$headers[] = 'Authorization:'.POWER_OFFICE_PLUGIN_WOO_AUTH_KEY;
+$headers[] = 'Authorization:'.TRPTX_TO_PLUGIN_WOO_AUTH_KEY;
 $headers[] = 'Cache-Control: no-cache';
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $result = curl_exec($ch);
@@ -245,11 +245,11 @@ return false;
 
 }
 if ($tokenAccess!=false ) {
-	$postsDataplug = wp_remote_retrieve_body(wp_remote_get(CHFS_VALIDATE_API_URL.'/api/getSiteData?id='.CHFS_VALIDATE_API_PLUGIN_ID.'&domain='.$_SERVER['HTTP_HOST']));
+	$postsDataplug = wp_remote_retrieve_body(wp_remote_get(TRPTX_CHFS_VALIDATE_API_URL.'/api/getSiteData?id='.TRPTX_TRPTX_CHFS_VALIDATE_API_PLUGIN_ID.'&domain='.$_SERVER['HTTP_HOST']));
 	
 	$postsgetPlug = json_decode($postsDataplug);
 	if (get_option('CHFS_VALIDATE_API_PLUGIN_KEY')==$postsgetPlug->key) {
-	include POWER_OFFICE_PLUGIN_PATH."pwfo_woocomerce_to_poweroffice/pwfo_woocomerce_hooks_triger.php";
+	//include TRPTX_TO_PLUGIN_PATH."pwfo_woocomerce_to_poweroffice/pwfo_woocomerce_hooks_triger.php";
 	}
 }else{
 }
@@ -263,10 +263,10 @@ register_activation_hook(__FILE__, function(){
 add_option('pwspk_woo_api_key', '');
 add_option('Modedev', 'on');
 add_option('pwspk_power_office_key', '');
-add_option('POWER_OFFICE_PLUGIN_PO_API_URL', 'https://api-demo.poweroffice.net');
+add_option('TRPTX_TO_PLUGIN_PO_API_URL', 'https://api-demo.poweroffice.net');
 add_option('CHFS_VALIDATE_API_PLUGIN_KEY', '');
-$postPluginData = wp_remote_retrieve_body(wp_remote_post(CHFS_VALIDATE_API_URL.'/api/sendSiteData', [
-'body' =>['id' => CHFS_VALIDATE_API_PLUGIN_ID,
+$postPluginData = wp_remote_retrieve_body(wp_remote_post(TRPTX_CHFS_VALIDATE_API_URL.'/api/sendSiteData', [
+'body' =>['id' => TRPTX_CHFS_VALIDATE_API_PLUGIN_ID,
 'domain' =>$_SERVER['HTTP_HOST'],
 'is_del' => 'no',
 'is_active' => 'yes'],
@@ -276,8 +276,8 @@ $postPluginData = wp_remote_retrieve_body(wp_remote_post(CHFS_VALIDATE_API_URL.'
 $resultPlugin=json_decode($postPluginData);
 });
 register_deactivation_hook(__FILE__, function(){
-	$postPluginData = wp_remote_retrieve_body(wp_remote_post(CHFS_VALIDATE_API_URL.'/api/sendSiteData', [
-		'body' =>['id' => CHFS_VALIDATE_API_PLUGIN_ID,
+	$postPluginData = wp_remote_retrieve_body(wp_remote_post(TRPTX_CHFS_VALIDATE_API_URL.'/api/sendSiteData', [
+		'body' =>['id' => TRPTX_CHFS_VALIDATE_API_PLUGIN_ID,
 		'domain' =>$_SERVER['HTTP_HOST'],
 		'is_del' => 'no',
 		'is_active' => 'no'],
@@ -302,7 +302,7 @@ require 'plugin-update-checker-master/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/faisalsehar786/Creativeheads-Power-Office-Woocomerce-Plugin/',
 	__FILE__,
-	'pwfo_power_office_woocomerce_andpercent'
+	'pwfo_trptx_to_woocomerce_andpercent'
 );
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('main');
